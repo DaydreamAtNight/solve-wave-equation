@@ -3,6 +3,8 @@
 #include <algorithm>
 #include <cmath>
 #include <iostream>
+#include <fstream>
+#include <unistd.h>
 
 using namespace std;
 
@@ -18,6 +20,9 @@ void meshgrid(vector<double> xin, vector<double> yin, vector<vector<double>> &xo
 
 template <class T>
 void output_points_data(vector<T> &x, vector<T> &y, vector<vector<T> > &v, string message);
+
+template <class T>
+void overwrite_points_data(vector<T> &x, vector<T> &y, vector<vector<T> > &v, string header);
 
 int main()
 {
@@ -80,8 +85,13 @@ int main()
 				(C*Dt/(pow(Dy,2)))*(u[j-1][i]-2*u[j][i]+u[j+1][i]);
 			}
 		}
+
+        if (step%5 ==0)
+        {
+	        overwrite_points_data<double>(x, y, u, "x, y, v");
+            usleep(0.01);
+        }
 	}
-	output_points_data<double>(x, y, u, "x, y, v");
 }
 
 template <class T>
@@ -144,6 +154,20 @@ void output_points_data(vector<T> &x, vector<T> &y, vector<vector<T> > &v, strin
     }
 }
 
+template <class T>
+void overwrite_points_data(vector<T> &x, vector<T> &y, vector<vector<T> > &v, string header)
+{
+  ofstream test_csv("test.csv", ofstream::trunc); // trunc means overwrite
+  test_csv << header << endl;
+  for (long unsigned int j=0; j < y.size(); j++)
+  {
+    for (long unsigned int i=0; i < x.size(); i++)
+      {
+        test_csv << x[i] << ", " << y[j] << ", " << v[j][i] << endl;
+      }
+  }
+  test_csv.close();
+}
 
 void meshgrid(vector<double> xin, vector<double> yin, vector<vector<double>> &xout, vector<vector<double>> &yout)
 {
@@ -165,3 +189,6 @@ void meshgrid(vector<double> xin, vector<double> yin, vector<vector<double>> &xo
 
 
 // g++-11 --std=c++11 -W -o 12b.out 12b.cpp
+
+// plot in gnuplot
+// gnuplot> splot "test.csv" u 1:2:3 w lines palette
