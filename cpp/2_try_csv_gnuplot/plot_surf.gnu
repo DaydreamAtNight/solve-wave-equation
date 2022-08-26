@@ -5,6 +5,6 @@ set yrange [-1:1]
 set zrange [-.2:.5]
 
 
-while (0.0001) {
-    replot
-}
+# while (0.0001) {
+#     replot
+# }
