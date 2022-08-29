@@ -22,12 +22,12 @@ template <class T>
 void output_points_data(vector<T> &x, vector<T> &y, vector<vector<T> > &v, string message);
 
 template <class T>
-void overwrite_points_data(vector<T> &x, vector<T> &y, vector<vector<T> > &v, string header);
+void overwrite_points_data(vector<T> &x, vector<T> &y, vector<vector<T> > &v, string header, string fname , int stride);
 
 int main()
 {
     // define parameters
-	int nSteps = 100;
+	int nSteps = 1000;
     double Dt = 0.001;
     double C = 15;
     double nx = 300.0, ny = 300.0;
@@ -88,10 +88,13 @@ int main()
 
         if (step%5 ==0)
         {
-	        overwrite_points_data<double>(x, y, u, "x, y, v");
+            string fname = to_string(step)+".csv";
+	        overwrite_points_data<double>(x, y, u, "x, y, v",fname ,1);
             usleep(0.01);
         }
 	}
+
+    // system("gnuplot -p plot_surf.gnu");
 }
 
 template <class T>
@@ -155,18 +158,19 @@ void output_points_data(vector<T> &x, vector<T> &y, vector<vector<T> > &v, strin
 }
 
 template <class T>
-void overwrite_points_data(vector<T> &x, vector<T> &y, vector<vector<T> > &v, string header)
+void overwrite_points_data(vector<T> &x, vector<T> &y, vector<vector<T> > &v, string header, string fname , int stride)
 {
-  ofstream test_csv("test.csv", ofstream::trunc); // trunc means overwrite
-  test_csv << header << endl;
-  for (long unsigned int j=0; j < y.size(); j++)
+  ofstream f_csv(fname, ofstream::trunc); // trunc means overwrite
+  f_csv << header << endl;
+  for (long unsigned int j=0; j < y.size(); j+=stride)
   {
-    for (long unsigned int i=0; i < x.size(); i++)
+    for (long unsigned int i=0; i < x.size(); i+=stride)
       {
-        test_csv << x[i] << ", " << y[j] << ", " << v[j][i] << endl;
+        f_csv << x[i] << ", " << y[j] << ", " << v[j][i] << endl;
       }
+      f_csv << endl;
   }
-  test_csv.close();
+  f_csv.close();
 }
 
 void meshgrid(vector<double> xin, vector<double> yin, vector<vector<double>> &xout, vector<vector<double>> &yout)
