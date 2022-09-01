@@ -1,4 +1,4 @@
-set term png size 1500, 1000
+set term png size 700, 700
 
 # load 'parula.pal'
 # jet palette: 
@@ -6,7 +6,7 @@ set palette defined ( 0 "#000090", 1 "#000fff", 2 "#0090ff", 3 "#0fffee", 4 "#90
 set cbrange [-0.1:0.1]
 set xrange [-1:1]
 set yrange [-1:1]
-set zrange [-.2:.5]
+set zrange [-.2:.75]
 set pm3d
 set xyplane at -0.2
 

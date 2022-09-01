@@ -89,8 +89,9 @@ public:
 
     inline void init_style()
     {
+        gp << "set term qt size 700, 700 position 0,0\n";
         gp << "set xyplane at -0.2\n";
-        gp << "set zrange [-0.2:0.5]\n";
+        gp << "set zrange [-0.2:0.75]\n";
         gp << "set cbrange [-0.1:0.13]\n";
         gp << "set palette defined ( 0 '#000090'" \
            << ", 1 '#000fff', 2 '#0090ff', 3 '#0fffee', "\

@@ -65,7 +65,7 @@ for step in 0:nSteps
                     (C * Dt / Dy^2) .* (u[2:nx, 1:ny-1] .- 2 .* u[2:nx, 2:ny] + u[2:nx, 3:ny+1]);
     if step % 5 == 0
         ax.clear();
-        ax.plot_surface(x, y, u, cmap=plt.cm.winter, vmin=-0.1, vmax=0.1);
+        ax.plot_surface(x, y, u, cmap=plt.cm.jet, vmin=-0.1, vmax=0.1);
         toc = now();
         ax.text(-1, 1, 0.2, string(floor(1000 / (toc - tic).value)) * " fps", fontsize=12);
         global tic = now();

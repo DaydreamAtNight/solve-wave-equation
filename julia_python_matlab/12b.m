@@ -15,8 +15,8 @@ close all
 nSteps = 1000;            % Number of timesteps
 Dt = 1e-3;                % Length of a timestep
 C = 15;                   % Stiffness constant
-nx = 200;                 % Number of support points in x
-ny = 200;                 % Number of support points in y
+nx = 300;                 % Number of support points in x
+ny = 300;                 % Number of support points in y
 w = 20;                   % Initial wave width
 
 % Domain size (-xmax<x<xmax, -ymax<y<ymax)
@@ -51,7 +51,7 @@ for step = 0:nSteps
     % Plot every 5 steps, otherwise too slow
     if (mod(step,5)==0)
         surf(x(1:5:end,1:5:end),y(1:5:end,1:5:end),u(1:5:end,1:5:end))
-        colormap winter
+        colormap jet
         % shading interp
         % light
         axis equal;

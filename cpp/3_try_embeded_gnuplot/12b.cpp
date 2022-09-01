@@ -12,7 +12,7 @@ int main()
 	int nSteps = 1000;
     double Dt = 0.001;
     double C = 15;
-    double nx = 300.0, ny = 300.0;
+    int nx = 300, ny = 300;
     double w = 20;
 
     // Domain size (-xmax<x<xmax, -ymax<y<ymax)
@@ -33,9 +33,9 @@ int main()
     meshgrid(x, y, X, Y);
 
 	// initialization
-	for (int j=0; j < ny; j++)
+	for (int j=0; j < ny+1; j++)
     {
-    	for (int i=0; i < nx; i++)
+    	for (int i=0; i < nx+1; i++)
         {
 			r[j][i] = pow(X[j][i],2) + pow(Y[j][i],2);
 			if(r[j][i]<1)
@@ -51,17 +51,17 @@ int main()
     GnuPlotWrapper<double> GPW;
 	for (int step = 0; step < nSteps; step++)
 	{
-		for (int j=1; j < ny-1; j++)
+		for (int j=1; j < ny; j++)
 		{
-			for (int i=1; i < nx-1; i++)
+			for (int i=1; i < nx; i++)
 			{
 				u[j][i] = u[j][i] + Dt * v[j][i];
 			}
 		}
 
-		for (int j=1; j < ny-1; j++)
+		for (int j=1; j < ny; j++)
 		{
-			for (int i=1; i < nx-1; i++)
+			for (int i=1; i < nx; i++)
 			{
 				v[j][i] = v[j][i] + 
 				(C*Dt/(pow(Dx,2)))*(u[j][i-1]-2*u[j][i]+u[j][i+1])+ 

@@ -70,11 +70,11 @@ for step in range(nSteps):
 
     if step % 5 == 0:
         ax.clear()
-        ax.plot_surface(x, y, u, cmap=plt.cm.winter,vmin=-0.1, vmax=0.1)
+        surf = ax.plot_surface(x, y, u, cmap=plt.cm.jet,vmin=-0.1, vmax=0.1)
         toc = time.perf_counter()
         ax.text(-1, 1, 0.2, str(np.floor(1/(toc-tic)))+" fps",fontsize=12)
         tic = time.perf_counter()
-        ax.set_xlim([-1, 1])
+        ax.set_xlim([-1, 1])    
         ax.set_ylim([-1, 1])
         ax.set_zlim([-0.2, 0.5])
         ax.set_xlabel('x')
